@@ -46,5 +46,7 @@ void ACPPTargetSpawner::InitSpawning(int Count)
 
 		SpawnTarget(RandomVec);
 	}
+
+	TargetsRemaining = Count;
 }
 

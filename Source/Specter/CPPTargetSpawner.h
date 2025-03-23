@@ -25,6 +25,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
 	FVector SpawnRange;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
+	int TargetsRemaining;
+
 	UFUNCTION(BlueprintCallable, Category = "Spawning")
 	void SpawnTarget(FVector Location);
 
