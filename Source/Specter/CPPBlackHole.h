@@ -27,7 +27,7 @@ public:
 	FRotator RotationDirection{ 0.0f, 0.0f, 1.0f };
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Black Hole")
-	float PullForce{ 1000.0f };
+	float PullForce{ 10000.0f };
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Black Hole")
 	float AffectingDistance{ 1000.0f };
@@ -38,9 +38,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Black Hole")
 	TArray<AActor*> AffectedActors;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Componets")
+	class UStaticMeshComponent* BlackHoleMesh;
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	class USphereComponent* SphereComponent;
+	class USphereComponent* IntersectionSphere;
 
 	void GetActorsWithCharacterMovement();
 

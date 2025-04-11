@@ -10,8 +10,16 @@ ACPPBlackHole::ACPPBlackHole()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Initialize the sphere component
-	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
-	SphereComponent->SetupAttachment(RootComponent);
+	IntersectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
+	IntersectionSphere->SetupAttachment(RootComponent);
+
+	BlackHoleMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BlackHoleMesh"));
+	BlackHoleMesh->SetupAttachment(IntersectionSphere);
+	BlackHoleMesh->SetStaticMesh(ConstructorHelpers::FObjectFinder<UStaticMesh>(TEXT("StaticMesh'/Game/LevelObjects/Sphere.Sphere'")).Object);
+
+	BlackHoleMesh->SetVisibility(true);
+	BlackHoleMesh->SetHiddenInGame(false);
+
 }
 
 // Called when the game starts or when spawned
@@ -19,7 +27,8 @@ void ACPPBlackHole::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SphereComponent->SetSphereRadius(AffectingDistance);
+	IntersectionSphere->SetSphereRadius(AffectingDistance);
+
 }
 
 // Called every frame
@@ -58,7 +67,7 @@ void ACPPBlackHole::Tick(float DeltaTime)
 void ACPPBlackHole::GetActorsWithCharacterMovement()
 {
 	TArray<AActor*> OverlappingActors;
-	SphereComponent->GetOverlappingActors(OverlappingActors);
+	IntersectionSphere->GetOverlappingActors(OverlappingActors);
 
 	AffectedActors.Empty();
 	for (AActor* Actor : OverlappingActors)
