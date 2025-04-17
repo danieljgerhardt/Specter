@@ -50,8 +50,8 @@ void ACPPBlackHole::Tick(float DeltaTime)
 		UCharacterMovementComponent* CharacterMovement = Actor->FindComponentByClass<UCharacterMovementComponent>();
 		if (CharacterMovement) {
 			//apply pull force
-			float DistanceScale = (PullForce - DistToActor);
-			FVector IterPullForce = PullDirection * DistanceScale;
+			float DistanceScale = FMath::Clamp((AffectingDistance - DistToActor) / AffectingDistance, 0.1f, 1.0f); // Ensure a minimum pull force
+			FVector IterPullForce = PullDirection * PullForce * FMath::Pow(DistanceScale, 2); // Exponential scaling for smoother pull
 			CharacterMovement->AddImpulse(IterPullForce * DeltaTime, true);
 
 			//apply rotation force
@@ -74,6 +74,8 @@ void ACPPBlackHole::GetActorsWithCharacterMovement()
 	{
 		if (Actor->FindComponentByClass<UCharacterMovementComponent>())
 		{
+			if (!AffectsPlayer && Actor->IsA(APlayerController::StaticClass())) continue;
+				
 			AffectedActors.Add(Actor);
 		}
 	}

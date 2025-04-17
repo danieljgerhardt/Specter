@@ -41,6 +41,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Componets")
 	class UStaticMeshComponent* BlackHoleMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Black Hole")
+	bool AffectsPlayer{ true };
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class USphereComponent* IntersectionSphere;
